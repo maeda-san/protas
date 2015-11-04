@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'url' => 'http://localhost',
+    'url' => 'http://protas.herokuapp.com/protas',
 
     /*
     |--------------------------------------------------------------------------
