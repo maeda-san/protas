@@ -14,3 +14,6 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+// menu
+Route::get('/menu', 'MenuController@index');
