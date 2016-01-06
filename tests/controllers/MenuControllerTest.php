@@ -13,7 +13,7 @@ class MenuControllerTest extends TestCase
      */
     public function testExample()
     {
-        $this->call('GET', '/menu');
-        $this->assertResponseOk();
+        $this->visit('/menu')
+                ->assertResponseOk();
     }
 }
