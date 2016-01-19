@@ -7,4 +7,4 @@ notifications:
 
 before_script:
   - mysql -uroot -e "create database protas"
-  - cp .env.protas .env
+  - cp .env.travis .env
