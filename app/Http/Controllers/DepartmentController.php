@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Department;
 use Illuminate\Http\Request;
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 
 class DepartmentController extends Controller
 {
@@ -15,7 +15,9 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        echo 'index';
+        $departments = Department::all();
+
+        return view('department.index', compact('departments'));
     }
 
     /**
