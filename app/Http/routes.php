@@ -14,5 +14,5 @@
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::get('/menu', 'MenuController@show');
 Route::resource('department', 'DepartmentController');
