@@ -15,4 +15,6 @@
       </tr>
     @endforeach
   </table>
+
+  {!! link_to(route('department.create'), '新規作成') !!}
 @endsection
