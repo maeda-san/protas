@@ -3,6 +3,12 @@
 @section('title')部署一覧@endsection
 
 @section('content')
+  @if(!empty($message))
+    <div id="message">
+      {{$message}}
+    </div>
+  @endif
+
   <table>
     <tr>
       <th>部署名</th>

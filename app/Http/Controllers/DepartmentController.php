@@ -17,7 +17,9 @@ class DepartmentController extends Controller
     {
         $departments = Department::all();
 
-        return view('department.index', compact('departments'));
+        $message = \Session::has('message') ?  \Session::get('message') : '';
+
+        return view('department.index', compact('departments', 'message'));
     }
 
     /**
@@ -38,7 +40,12 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $inputs = $request->all();
+        Department::create($inputs);
+
+        \Session::flash('message', '部署を追加しました');
+
+        return redirect()->route('department.index');
     }
 
     /**
