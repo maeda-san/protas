@@ -10,7 +10,7 @@
   @foreach($departments as $department)
     <tr>
       <td>{{$department->name}}</td>
-      <td>{{$department->created_at}}</td>
+      <td>{{$department->created_at->format('Y-m-d')}}</td>
     </tr>
     @endforeach
 </table>
