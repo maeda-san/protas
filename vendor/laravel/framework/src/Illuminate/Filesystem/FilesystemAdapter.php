@@ -69,7 +69,11 @@ class FilesystemAdapter implements FilesystemContract, CloudFilesystemContract
      */
     public function put($path, $contents, $visibility = null)
     {
-        $config = ['visibility' => $this->parseVisibility($visibility)];
+        if ($visibility = $this->parseVisibility($visibility)) {
+            $config = ['visibility' => $visibility];
+        } else {
+            $config = [];
+        }
 
         if (is_resource($contents)) {
             return $this->driver->putStream($path, $contents, $config);
@@ -112,10 +116,10 @@ class FilesystemAdapter implements FilesystemContract, CloudFilesystemContract
      * @param  string  $data
      * @return int
      */
-    public function prepend($path, $data)
+    public function prepend($path, $data, $separator = PHP_EOL)
     {
         if ($this->exists($path)) {
-            return $this->put($path, $data.PHP_EOL.$this->get($path));
+            return $this->put($path, $data.$separator.$this->get($path));
         }
 
         return $this->put($path, $data);
@@ -128,10 +132,10 @@ class FilesystemAdapter implements FilesystemContract, CloudFilesystemContract
      * @param  string  $data
      * @return int
      */
-    public function append($path, $data)
+    public function append($path, $data, $separator = PHP_EOL)
     {
         if ($this->exists($path)) {
-            return $this->put($path, $this->get($path).PHP_EOL.$data);
+            return $this->put($path, $this->get($path).$separator.$data);
         }
 
         return $this->put($path, $data);
@@ -313,7 +317,8 @@ class FilesystemAdapter implements FilesystemContract, CloudFilesystemContract
      * Parse the given visibility value.
      *
      * @param  string|null  $visibility
-     * @return string
+     * @return string|null
+     *
      * @throws \InvalidArgumentException
      */
     protected function parseVisibility($visibility)

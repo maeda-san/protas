@@ -11,6 +11,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exception\HttpResponseException;
 use Illuminate\Validation\ValidatesWhenResolvedTrait;
 use Illuminate\Contracts\Validation\ValidatesWhenResolved;
+use Illuminate\Contracts\Validation\Factory as ValidationFactory;
 
 class FormRequest extends Request implements ValidatesWhenResolved
 {
@@ -72,7 +73,7 @@ class FormRequest extends Request implements ValidatesWhenResolved
      */
     protected function getValidatorInstance()
     {
-        $factory = $this->container->make('Illuminate\Validation\Factory');
+        $factory = $this->container->make(ValidationFactory::class);
 
         if (method_exists($this, 'validator')) {
             return $this->container->call([$this, 'validator'], compact('factory'));
@@ -88,6 +89,8 @@ class FormRequest extends Request implements ValidatesWhenResolved
      *
      * @param  \Illuminate\Contracts\Validation\Validator  $validator
      * @return mixed
+     *
+     * @throws \Illuminate\Http\Exception\HttpResponseException
      */
     protected function failedValidation(Validator $validator)
     {
@@ -114,6 +117,8 @@ class FormRequest extends Request implements ValidatesWhenResolved
      * Handle a failed authorization attempt.
      *
      * @return mixed
+     *
+     * @throws \\Illuminate\Http\Exception\HttpResponseExceptio
      */
     protected function failedAuthorization()
     {
@@ -155,7 +160,7 @@ class FormRequest extends Request implements ValidatesWhenResolved
      */
     protected function formatErrors(Validator $validator)
     {
-        return $validator->errors()->getMessages();
+        return $validator->getMessageBag()->toArray();
     }
 
     /**
