@@ -3,6 +3,16 @@
 @section('title')新規作成@endsection
 
 @section('content')
+  @if($errors->any())
+    <div>
+      <ul>
+        @foreach($errors->all() as $error)
+          <li>{{$error}}</li>
+          @endforeach
+      </ul>
+    </div>
+    @endif
+
   {!! Form::open(['route' => 'department.store']) !!}
   <ul>
     <li>
